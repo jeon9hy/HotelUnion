@@ -115,7 +115,7 @@ namespace HotelUnionClient
         {
             room_id= Room_info.Rows[this.Room_info.CurrentCellAddress.Y].Cells[0].Value.ToString();
             room_name =TB_RoomSelect.Text = Room_info.Rows[this.Room_info.CurrentCellAddress.Y].Cells[1].Value.ToString();
-            label_Price.Text = "입금하실금액 : "+Room_info.Rows[this.Room_info.CurrentCellAddress.Y].Cells[4].Value.ToString()+"원";
+            label_Price.Text = "입금하실금액: "+Room_info.Rows[this.Room_info.CurrentCellAddress.Y].Cells[4].Value.ToString()+"원";
         }
 
         private void BT_RoomSelect_Click(object sender, EventArgs e)
