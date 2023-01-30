@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,19 @@ namespace HotelUnionAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // Swagger생성기 서비스를 추가
+            services.AddSwaggerGen(c =>
+            {
+
+                c.SwaggerDoc("api", new OpenApiInfo
+                {
+                    Title = "HotelUnionAPI",
+                    Description = "HotelUnionAPI 예제",
+                    Version = "v1"
+                }) ;
+
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,15 +48,29 @@ namespace HotelUnionAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/api/swagger.json", "Api Documents");
+            });
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+              {
+                    endpoints.MapControllers();
+
+              });
+
+            }
     }
 }
+
